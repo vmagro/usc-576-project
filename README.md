@@ -5,6 +5,9 @@ video.
 
 Example:
 ```
+./rgb2mp4 ~/Downloads/Disney.rgb ~/Downloads/Disney.wav ./Disney.mp4
+```
+```
 go run convert.go -in=/home/vmagro/Downloads/Disney.rgb  -out=(pwd)/converted.rgb
 ffmpeg -framerate 20 -vcodec rawvideo -f rawvideo -pix_fmt rgb24 -s 352x288 -i ./converted.rgb -i raw.wav -pix_fmt yuv420p converted.mp4
 ```
