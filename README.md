@@ -5,12 +5,9 @@ video.
 
 Example:
 ```
-./rgb2mp4 ~/Downloads/Disney.rgb ~/Downloads/Disney.wav ./Disney.mp4
-```
-This is roughly equivalent to the following commands:  
-```
-go run convert.go -in=/home/vmagro/Downloads/Disney.rgb  -out=(pwd)/converted.rgb
-ffmpeg -framerate 20 -vcodec rawvideo -f rawvideo -pix_fmt rgb24 -s 352x288 -i ./converted.rgb -i raw.wav -pix_fmt yuv420p converted.mp4
+./rgb2mp4 ~/Downloads/Disney.rgb ~/Downloads/Disney.wav ./Disney
+
+# This will produce two files, ./Disney.mp4 and ./Disney.mp3
 ```
 This converts the course provided Disney video to rgb24 format, then converts
-that rgb24 video into an mp4 with synced audio from the given wav file.
+that rgb24 video into an mp4 and converts the provided wav audio to mp3.
