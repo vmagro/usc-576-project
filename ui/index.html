@@ -1,24 +1,39 @@
 <html>
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+  <script src="../tapestry.js"></script>
   <style>
    body {
      background-color: #333333;
+     display: flex;
+     align-items: center;
+     justify-content: center;
    }
    #video-wrapper {
      margin-top: 64px;
    }
    #video {
      display: block;
-     margin: 0 auto;
+   }
+   #tapestry {
+     position: relative;
+   }
+   .tapestry-section {
+     z-index: 2;
+     background-color: rgba(0,0,0, 0.2);
+   }
+   .tapestry-section.active {
+     background-color: rgba(0,0,0,0);
    }
   </style>
 </head>
 <body>
   <div id="video-wrapper">
-    <video id="video" src="../output.mp4" autoplay controls></video>
+    <video id="video" src="../output.mp4" controls></video>
     <audio id="audio" src="../output.mp3"></audio>
+    <div id="tapestry">
+      <img tapestry src="../tapestry.png"/>
+    </div>
   </div>
 </body>
 
@@ -32,5 +47,39 @@
     var audio = document.getElementById('audio');
     audio.pause();
   })
+  var last = -1
+  $('#video').bind('timeupdate',function(event){
+    var now = parseInt(this.currentTime);
+    if (now == last) {
+      return
+    }
+    // find the tapestry that should be active
+    for (var i=0; i<tapestry_regions.length; i++) {
+      var r = tapestry_regions[i];
+      if (r.start <= now && now < r.end) {
+        $('#section-' + i).addClass('active');
+      } else {
+        $('#section-' + i).removeClass('active');
+      }
+    }
+    // make sure we only update once a second
+    last = now;
+  });
+
+  // load the tapestry info
+  for (var i=0; i<tapestry_regions.length; i++) {
+    var section = tapestry_regions[i];
+    var width = section.right - section.left;
+    var height = section.bottom - section.top;
+    var div = $("<div/>");
+    div.attr('id', 'section-' + i);
+    div.css('position', 'absolute');
+    div.css('top', section.top);
+    div.css('left', section.left);
+    div.css('width', width);
+    div.css('height', height);
+    div.addClass('tapestry-section')
+    $('#tapestry').append(div);
+  }
 </script>
 </html>
