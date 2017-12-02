@@ -7,7 +7,20 @@
 </head>
 <body>
   <div id="video-wrapper">
-    <video src="../output.mp4" width=352 height=288 autoplay controls/>
+    <video id="video" src="../output.mp4" width=352 height=288 autoplay controls></video>
+    <audio id="audio" src="../output.mp3"></audio>
   </div>
 </body>
+
+<script>
+  $('#video').bind('playing', function(e) {
+    var audio = document.getElementById('audio');
+    audio.currentTime = document.getElementById('video').currentTime;
+    audio.play();
+  })
+  $('#video').bind('pause', function(e) {
+    var audio = document.getElementById('audio');
+    audio.pause();
+  })
+</script>
 </html>
