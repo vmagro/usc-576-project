@@ -7,7 +7,6 @@
      background-color: #333333;
      display: flex;
      align-items: center;
-     justify-content: center;
    }
    #video-wrapper {
      margin-top: 64px;
@@ -20,7 +19,7 @@
    }
    .tapestry-section {
      z-index: 2;
-     background-color: rgba(0,0,0, 0.2);
+     background-color: rgba(0,0,0, 0.5);
    }
    .tapestry-section.active {
      background-color: rgba(0,0,0,0);
@@ -49,8 +48,8 @@
   })
   var last = -1
   $('#video').bind('timeupdate',function(event){
-    var now = parseInt(this.currentTime);
-    if (now == last) {
+    var now = this.currentTime;
+    if (Math.round(now) == last) {
       return
     }
     // find the tapestry that should be active
@@ -63,7 +62,7 @@
       }
     }
     // make sure we only update once a second
-    last = now;
+    last = Math.round(now);
   });
 
   // load the tapestry info
