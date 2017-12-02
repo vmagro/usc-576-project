@@ -8,11 +8,9 @@
      display: flex;
      align-items: center;
    }
-   #video-wrapper {
-     margin-top: 64px;
-   }
    #video {
      display: block;
+     width: 1408;
    }
    #tapestry {
      position: relative;
@@ -86,6 +84,7 @@
       var start = $(this).data('start');
       $('#video')[0].currentTime = start;
       $('#audio')[0].currentTime = start;
+      $('#video')[0].play()
     });
   }
 </script>
