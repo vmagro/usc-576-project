@@ -17,12 +17,13 @@ video = np.fromfile(in_file, dtype=np.uint8)
 video = video.reshape((-1, 288, 352, 3))
 num_frames = video.shape[0]
 
-step = int(num_frames / 16.0)
-keyframes = video[0::step][0:16]
+num_keyframes = 24
+step = int(num_frames / float(num_keyframes))
+keyframes = video[0::step][:num_keyframes]
 keyframes_with_timestamps = [(k, timestamp(i * step), timestamp(
     (i + 1) * step)) for i, k in enumerate(keyframes)]
 
-tapestry = np.zeros((288 * 2, int(len(keyframes) / 2) * 352, 3), np.uint8)
+tapestry = np.zeros((288 * 2, int(num_keyframes / 2) * 352, 3), np.uint8)
 
 # copy keyframes into tapestry
 high = True
