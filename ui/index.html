@@ -3,11 +3,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <style>
+   body {
+     background-color: #333333;
+   }
+   #video-wrapper {
+     margin-top: 64px;
+   }
+   #video {
+     display: block;
+     margin: 0 auto;
+   }
   </style>
 </head>
 <body>
   <div id="video-wrapper">
-    <video id="video" src="../output.mp4" width=352 height=288 autoplay controls></video>
+    <video id="video" src="../output.mp4" autoplay controls></video>
     <audio id="audio" src="../output.mp3"></audio>
   </div>
 </body>
