@@ -23,7 +23,7 @@ keyframes = video[0::step][:num_keyframes]
 keyframes_with_timestamps = [(k, timestamp(i * step), timestamp(
     (i + 1) * step)) for i, k in enumerate(keyframes)]
 
-tapestry = np.zeros((288 * 2, int(num_keyframes / 2) * 352, 3), np.uint8)
+tapestry = np.zeros((288 * 2, int(num_keyframes / 2) * 352 + int(352 / 2), 3), np.uint8)
 
 # copy keyframes into tapestry
 high = True
@@ -32,6 +32,7 @@ for i, keyframe in enumerate(keyframes):
     if high:
         tapestry[:288, left:left + 352, :] = keyframe
     else:
+        left += int(352 / 2)
         tapestry[288:, left:left + 352, :] = keyframe
     high = not high
 
@@ -47,6 +48,7 @@ for i, (_, start, end) in enumerate(keyframes_with_timestamps):
     if high:
         top = 0
     else:
+        left += int(352 / 2)
         top = 288
     high = not high
 
