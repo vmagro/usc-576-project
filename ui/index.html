@@ -78,8 +78,16 @@
     div.css('left', section.left);
     div.css('width', width);
     div.css('height', height);
-    div.addClass('tapestry-section')
+    div.addClass('tapestry-section');
+    div.data('start', section.start);
+    div.data('end', section.end);
     $('#tapestry').append(div);
+
+    div.on('click', function() {
+      var start = $(this).data('start');
+      $('#video')[0].currentTime = start;
+      $('#audio')[0].currentTime = start;
+    });
   }
 </script>
 </html>
