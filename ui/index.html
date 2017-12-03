@@ -7,6 +7,7 @@
      background-color: #333333;
      display: flex;
      align-items: center;
+     justify-content: center;
    }
    #video {
      display: block;
@@ -21,6 +22,7 @@
    }
    .tapestry-section.active {
      background-color: rgba(0,0,0,0);
+     border: 1px white solid;
    }
   </style>
 </head>
@@ -35,9 +37,10 @@
 </body>
 
 <script>
+  var video = document.getElementById('video');
+  var audio = document.getElementById('audio');
   $('#video').bind('playing', function(e) {
-    var audio = document.getElementById('audio');
-    audio.currentTime = document.getElementById('video').currentTime;
+    audio.currentTime = video.currentTime
     audio.play();
   })
   $('#video').bind('pause', function(e) {
@@ -82,9 +85,10 @@
 
     div.on('click', function() {
       var start = $(this).data('start');
-      $('#video')[0].currentTime = start;
-      $('#audio')[0].currentTime = start;
-      $('#video')[0].play()
+      video.currentTime = start;
+      audio.currentTime = start;
+      video.play()
+      audio.play()
     });
   }
 </script>
