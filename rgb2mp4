@@ -9,6 +9,6 @@ converted_rgb=$(mktemp)
 go run convert.go -in=$1 -out=$converted_rgb
 
 ffmpeg -y -framerate 20 -vcodec rawvideo -f rawvideo -pix_fmt rgb24 -s 352x288 -i $converted_rgb -pix_fmt yuv420p $output.mp4
-ffmpeg -i $audio -codec:a libmp3lame -qscale:a 2 $output.mp3
+ffmpeg -y -i $audio -codec:a libmp3lame -qscale:a 2 $output.mp3
 
 rm -rf $converted_rgb
