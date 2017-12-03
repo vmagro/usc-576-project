@@ -24,13 +24,9 @@
      background-color: rgba(0,0,0,0);
      border: 1px white solid;
    }
-   #delay {
-     color: white;
-   }
   </style>
 </head>
 <body>
-  <div id="delay"></div>
   <div id="video-wrapper">
     <video id="video" src="../output.mp4" controls></video>
     <audio id="audio" src="../output.wav"></audio>
@@ -95,12 +91,5 @@
       audio.play()
     });
   }
-
-  function updateDelay() {
-    var diff = video.currentTime - audio.currentTime;
-    $('#delay').text(Math.round(diff * 100) / 100);
-    requestAnimationFrame(updateDelay);
-  }
-  requestAnimationFrame(updateDelay);
 </script>
 </html>
