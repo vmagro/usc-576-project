@@ -12,7 +12,7 @@ def timestamp(frame):
     return frame / frame_rate
 
 
-in_file = 'converted.rgb'
+in_file = 'output.rgb'
 video = np.fromfile(in_file, dtype=np.uint8)
 
 video = video.reshape((-1, 288, 352, 3))
