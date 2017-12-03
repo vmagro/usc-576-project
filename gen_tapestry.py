@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
+import PIL
 from PIL import Image
 import pdb
 
@@ -37,6 +38,7 @@ for i, keyframe in enumerate(keyframes):
     high = not high
 
 img = Image.fromarray(tapestry)
+img = img.resize([1408,184], PIL.Image.ANTIALIAS)
 img.save('tapestry.png')
 
 js_out = open('tapestry.js', 'w')
@@ -52,8 +54,13 @@ for i, (_, start, end) in enumerate(keyframes_with_timestamps):
         top = 288
     high = not high
 
+    left /= 3.125
+    top /= 3.125
+    width = 352 / 3.125
+    height = 288 / 3.125
+
     line = '{{start: {}, end: {}, left: {}, right: {}, top: {}, bottom: {}}},\n'.format(
-        start, end, left, left + 352, top, top + 288)
+        start, end, left, left + width, top, top + height)
     js_out.write(line)
 
 js_out.write('];')
