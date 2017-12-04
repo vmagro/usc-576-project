@@ -138,7 +138,7 @@ for scene in scenes:
     # pick the largest cluster to choose the keyframe in
     cluster = sorted(clusters, key=lambda c: len(c), reverse=True)[0]
     keyframe_number, keyframe = keyframe_in_cluster(cluster)
-    keyframes.append((keyframe_number, keyframe))
+    keyframes.append((keyframe_number, scene.start_frame, scene.duration_s, keyframe))
 
 
 target_keyframes = 24
@@ -150,7 +150,7 @@ while len(keyframes) < target_keyframes:
     # pick the biggest cluster in that shot
     cluster = sorted(shot.clusters, key=lambda c: len(c), reverse=True)[0]
     keyframe_number, keyframe = keyframe_in_cluster(cluster)
-    keyframes.append((keyframe_number, keyframe))
+    keyframes.append((keyframe_number, shot.start_frame, shot.duration_s, keyframe))
 
 
 pickle.dump(keyframes, args.output)

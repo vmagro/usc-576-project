@@ -1,28 +1,30 @@
 #!/usr/bin/env python3
 
+import argparse
 import numpy as np
 import PIL
 from PIL import Image
-import pdb
+import pickle
 
 frame_rate = 20.0
+
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--keyframes', '-k', type=argparse.FileType('rb'))
+
+args = parser.parse_args()
 
 
 def timestamp(frame):
     return frame / frame_rate
 
 
-in_file = 'output.rgb'
-video = np.fromfile(in_file, dtype=np.uint8)
+keyframes = pickle.load(args.keyframes)
 
-video = video.reshape((-1, 288, 352, 3))
-num_frames = video.shape[0]
-
-num_keyframes = 24
-step = int(num_frames / float(num_keyframes))
-keyframes = video[0::step][:num_keyframes]
-keyframes_with_timestamps = [(k, timestamp(i * step), timestamp(
-    (i + 1) * step)) for i, k in enumerate(keyframes)]
+keyframes_with_timestamps = [(frame, timestamp(start), timestamp(start) + duration) for i, start, duration, frame in keyframes]
+keyframes = [frame for i, start, duration, frame in keyframes]
+num_keyframes = len(keyframes_with_timestamps)
 
 tapestry = np.zeros((288 * 2, int(num_keyframes / 2) * 352 + int(352 / 2), 3), np.uint8)
 
