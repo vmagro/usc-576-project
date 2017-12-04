@@ -9,6 +9,7 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm
 import pickle
+import random
 
 parser = argparse.ArgumentParser()
 
@@ -23,7 +24,13 @@ logger = logging.getLogger('keyframe_cluster')
 logger.setLevel(10)
 
 
-Scene = namedtuple('Scene', 'start_frame end_frame duration_s')
+class Scene(object):
+    def __init__(self, start_frame, end_frame, duration_s):
+        self.start_frame = start_frame
+        self.end_frame = end_frame
+        self.duration_s = duration_s
+
+
 # grab the list of scenes
 scenes = []
 # skip over the first line in the scenes file which is garbage
@@ -95,7 +102,18 @@ def discontinuity(f1, f2):
     return np.mean(matchings)
 
 
+def keyframe_in_cluster(cluster):
+    # TODO: more sophistated keyframe selection
+    # keyframe_index = int(len(cluster) / 2)
+    keyframe_index = random.randrange(len(cluster))
+    keyframe_number = cluster[keyframe_index]
+    keyframe = video.get_data(keyframe_number)
+    return keyframe_number, keyframe
+
+
 keyframes = []
+
+shot_clusters = []
 # now cluster the frames in each scene and pick a keyframe
 for scene in scenes:
     # grab all the frames in this shot
@@ -116,12 +134,23 @@ for scene in scenes:
             clusters[-1].append(frame)
     logger.info('Shot resulted in %d clusters', len(clusters))
 
+    scene.clusters = clusters
     # pick the largest cluster to choose the keyframe in
-    # TODO: more sophistated keyframe selection
     cluster = sorted(clusters, key=lambda c: len(c), reverse=True)[0]
-    keyframe_index = int(len(cluster) / 2)
-    keyframe_number = cluster[keyframe_index]
-    keyframe = video.get_data(keyframe_number)
+    keyframe_number, keyframe = keyframe_in_cluster(cluster)
     keyframes.append((keyframe_number, keyframe))
+
+
+target_keyframes = 24
+# if we wanted more keyframes, look at the longest shots to come up with more
+while len(keyframes) < target_keyframes:
+    logger.info('Getting another keyframe (%d < %d)', len(keyframes), target_keyframes)
+    # TODO: take into account how many keyframes we already picked from this shot
+    shot = sorted(scenes, key=lambda s: s.duration_s, reverse=True)[0]
+    # pick the biggest cluster in that shot
+    cluster = sorted(shot.clusters, key=lambda c: len(c), reverse=True)[0]
+    keyframe_number, keyframe = keyframe_in_cluster(cluster)
+    keyframes.append((keyframe_number, keyframe))
+
 
 pickle.dump(keyframes, args.output)
