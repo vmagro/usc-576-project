@@ -1,0 +1,3 @@
+[submodule "PySceneDetect"]
+	path = PySceneDetect
+	url = git@github.com:Breakthrough/PySceneDetect.git
