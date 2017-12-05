@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "29c722af3bff54b1dfe235e3102efaccbb8becc2038ba92b299b5d3fadbf88e6"
+            "sha256": "7eac176fb76cc6f4e6c708c7ca168713299b4c27be4108c2f9b21acf9e3787d9"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -27,6 +27,12 @@
         ]
     },
     "default": {
+        "imageio": {
+            "hashes": [
+                "sha256:6dd95300d3d64713a2649334390fd9cf96712013172afd6e73b008e00934a73f"
+            ],
+            "version": "==2.2.0"
+        },
         "numpy": {
             "hashes": [
                 "sha256:910e7ae5eeee8d322775187692c5c66719cd58d230fbfd57245ea3cf75716910",
@@ -112,6 +118,13 @@
                 "sha256:1ab641cb7daf88e88ede8d3b89b7bd68a7099d8671160492d5e6845e24426080"
             ],
             "version": "==4.3.0"
+        },
+        "tqdm": {
+            "hashes": [
+                "sha256:733ce813ab83e17a03da34043c6265e29f6731e3cbbbe305b12694ced0af6770",
+                "sha256:7ca803c2ea268c6bdb541e2dac74a3af23cf4bf7b4132a6a78926d255f8c8df1"
+            ],
+            "version": "==4.19.4"
         }
     },
     "develop": {}
