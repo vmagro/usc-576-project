@@ -2,14 +2,9 @@
 
 import argparse
 import logging
-import csv
-from collections import namedtuple
 import imageio
-import numpy as np
-from PIL import Image
 from tqdm import tqdm
 import pickle
-import random
 
 parser = argparse.ArgumentParser()
 
@@ -26,9 +21,11 @@ logger.setLevel(10)
 # open the video file
 video = imageio.get_reader(args.video, 'ffmpeg')
 
+
 def grab_frame(number):
     rgb = video.get_data(number)
     return rgb
+
 
 keyframes = []
 
@@ -43,8 +40,6 @@ for keyframe_number in tqdm(range(0, num_frames, step)):
 
 if len(keyframes) > 24:
     keyframes = keyframes[:24]
-
-import pdb; pdb.set_trace()
 
 # sort keyframes by their start time
 keyframes = sorted(keyframes, key=lambda k: k[0])
