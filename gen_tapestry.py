@@ -23,6 +23,7 @@ def timestamp(frame):
 keyframes = pickle.load(args.keyframes)
 
 keyframes_with_timestamps = [(frame, timestamp(start), timestamp(start) + duration) for i, start, duration, frame in keyframes]
+keyframes_with_timestamps = sorted(keyframes_with_timestamps, key=lambda k: k[1])
 keyframes = [frame for i, start, duration, frame in keyframes]
 num_keyframes = len(keyframes_with_timestamps)
 

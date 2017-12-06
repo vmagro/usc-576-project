@@ -152,5 +152,7 @@ while len(keyframes) < target_keyframes:
     keyframe_number, keyframe = keyframe_in_cluster(cluster)
     keyframes.append((keyframe_number, shot.start_frame, shot.duration_s, keyframe))
 
+# sort keyframes by their start time
+keyframes = sorted(keyframes, key=lambda k: k[0])
 
 pickle.dump(keyframes, args.output)
